@@ -14,4 +14,5 @@ urlpatterns = [
     path("signup/maintenance_person/", views.MaintenancePersonSignUpView.as_view(), name="maintenance-person-signup"),
     path("create/vehicle", views.create_vehicle, name="create-vehicle"),
     path("assign_vehicle", views.assign_vehicle, name="assign-vehicle"),
+    path("create/route", views.create_route, name="create-route"),
 ]

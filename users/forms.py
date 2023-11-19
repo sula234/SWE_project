@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import transaction
 from django.forms.forms import Form
 from django.forms.models import ModelForm
-from .models import User, FuelPreson, Driver, MaintenancePerson, Vehicle
+from .models import Route, User, FuelPreson, Driver, MaintenancePerson, Vehicle
 from django import forms
 from django.contrib.auth import get_user_model
 
@@ -90,3 +90,9 @@ class AddVehicleForm(ModelForm):
 class AssignVehicleForm(Form):
     vehicle = forms.ModelChoiceField(queryset=Vehicle.objects.all())
     driver = forms.ModelChoiceField(queryset=Driver.objects.all())
+
+
+class CreateRouteForm(ModelForm):
+    class Meta:
+        model = Route
+        fields = ('driver', 'vehicle', 'destination')

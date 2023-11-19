@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
 
-from .forms import AddVehicleForm, AssignVehicleForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm
+from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
@@ -100,6 +100,21 @@ def create_vehicle(request):
     else:
         form = AddVehicleForm()
     return render(request, 'forms/create_vehicle.html', {'form': form})
+
+
+@login_required
+@admin_required
+def create_route(request):
+    if request.method == 'POST':
+        form = CreateRouteForm(request.POST)
+        if form.is_valid():
+            route = form.save(commit=False)
+            route.admin = request.user
+            route.save()
+            return redirect('admin-home')
+    else:
+        form = CreateRouteForm()
+    return render(request, 'forms/create_route.html', {'form': form})
 
 
 @login_required
