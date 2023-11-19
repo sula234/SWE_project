@@ -12,4 +12,6 @@ urlpatterns = [
     path("signup/driver/", views.DriverSignUpView.as_view(), name="driver-signup"),
     path("signup/fuel_person/", views.FuelPersonSignUpView.as_view(), name="fuel-person-signup"),
     path("signup/maintenance_person/", views.MaintenancePersonSignUpView.as_view(), name="maintenance-person-signup"),
+    path("create/vehicle", views.create_vehicle, name="create-vehicle"),
+    path("assign_vehicle", views.assign_vehicle, name="assign-vehicle"),
 ]

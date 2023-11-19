@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import transaction
-from .models import User, FuelPreson, Driver, MaintenancePerson
+from django.forms.forms import Form
+from django.forms.models import ModelForm
+from .models import User, FuelPreson, Driver, MaintenancePerson, Vehicle
 from django import forms
 from django.contrib.auth import get_user_model
 
@@ -77,3 +79,14 @@ class MaintenancePersonSignUpForm(UserCreationForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput())
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class AddVehicleForm(ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = ('driver', 'manufacturer', 'model', 'make', 'year', 'license_plate', 'capacity', 'mileage')
+
+
+class AssignVehicleForm(Form):
+    vehicle = forms.ModelChoiceField(queryset=Vehicle.objects.all())
+    driver = forms.ModelChoiceField(queryset=Driver.objects.all())
