@@ -37,7 +37,7 @@ class Vehicle(models.Model):
     model = models.CharField(max_length=100)
     make = models.CharField(max_length=100)
     year = models.IntegerField()
-    license_plate = models.CharField(max_length=10)
+    license_plate = models.CharField(max_length=32)
     capacity = models.IntegerField()
     mileage = models.IntegerField()
     cost = models.IntegerField(default=0)
@@ -56,7 +56,7 @@ class Route(models.Model):
     destination = models.CharField(max_length=100)
     start_time = models.DateTimeField(default=None, null=True)
     finish_time = models.DateTimeField(default=None, null=True)
-    status = models.CharField(choices=enums, default='pending')
+    status = models.CharField(max_length=16, choices=enums, default='pending')
 
 
 class MaintenancePerson(models.Model):
