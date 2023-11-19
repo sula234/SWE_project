@@ -7,9 +7,9 @@
     <title>Managment Page</title>
 </head>
 <body>
-    <h1>Manage Drivers</h1>
+    <h1>Add new users</h1>
     <a href="{% url 'driver-signup' %}" type="button">Add new driver</a>
-    <p>Already registered!</p>
-    <a href="{% url 'login' %}">Login Now</a><br>
-</body>
+    <a href="{% url 'fuel-person-signup' %}" type="button">Add new fueling person</a>
+    <a href="{% url 'maintenance-person-signup' %}" type="button">Add new mainenance person</a>
+    <h1>Manage tasks</h1>
 </html>

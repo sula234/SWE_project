@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class FuelPresonSignUpForm(UserCreationForm):
+class FuelPersonSignUpForm(UserCreationForm):
     email = forms.EmailField(widget=forms.EmailInput())
     password1 = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())

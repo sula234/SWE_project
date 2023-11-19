@@ -10,4 +10,6 @@ urlpatterns = [
     path("login/", views.LoginView.as_view(), name="login"),
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name="logout"),
     path("signup/driver/", views.DriverSignUpView.as_view(), name="driver-signup"),
+    path("signup/fuel_person/", views.FuelPersonSignUpView.as_view(), name="fuel-person-signup"),
+    path("signup/maintenance_person/", views.MaintenancePersonSignUpView.as_view(), name="maintenance-person-signup"),
 ]

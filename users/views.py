@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
 
-from .forms import FuelPresonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm
+from .forms import FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
@@ -50,7 +50,42 @@ class DriverSignUpView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('driver-home')
+        return redirect('admin-home')
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
+class FuelPersonSignUpView(CreateView):
+    model = User
+    form_class = FuelPersonSignUpForm
+    template_name = 'users/fuel_person_signup.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'fuel_person'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('admin-home')
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(admin_required, name='dispatch')
+class MaintenancePersonSignUpView(CreateView):
+    model = User
+    form_class = MaintenancePersonSignUpForm
+    template_name = 'users/maintenance_person_signup.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['user_type'] = 'maintenance_person'
+        return super().get_context_data(**kwargs)
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect('admin-home')
+
 
 @login_required
 @admin_required
