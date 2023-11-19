@@ -15,4 +15,6 @@ urlpatterns = [
     path("create/vehicle", views.create_vehicle, name="create-vehicle"),
     path("assign_vehicle", views.assign_vehicle, name="assign-vehicle"),
     path("create/route", views.create_route, name="create-route"),
+    path("routes", views.routes, name="routes"),
+    path("routes/<int:pk>", views.update_route, name="update-route"),
 ]

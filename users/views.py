@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView
 
-from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm
+from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
@@ -12,7 +12,7 @@ from django.urls import reverse
 from .decorators import admin_required, fuel_person_required, driver_required, maintenance_person_required
 
 from django.http import HttpResponse
-from .models import User, Vehicle
+from .models import Route, User, Vehicle
 
 from django.http import HttpResponseRedirect
 
@@ -131,6 +131,31 @@ def assign_vehicle(request):
     else:
         form = AssignVehicleForm()
     return render(request, 'forms/assign_vehicle.html', {'form': form})
+
+
+@login_required
+@admin_required
+def routes(request):
+    print(list(Route.objects.all()))
+    return render(request, 'pages/route_list.html', {'routes': list(Route.objects.all())})
+
+
+@login_required
+@admin_required
+def update_route(request, pk):
+    route = Route.objects.get(pk=pk)
+    initial = {'driver': route.driver, 'vehicle': route.vehicle, 'destination': route.destination}
+    if request.method == 'POST':
+        form = UpdateRouteForm(request.POST)
+        if form.is_valid():
+            route.driver = form.cleaned_data['driver']
+            route.vehicle = form.cleaned_data['vehicle']
+            route.destination = form.cleaned_data['destination']
+            route.save()
+            return redirect('routes')
+    else:
+        form = UpdateRouteForm(initial=initial)
+    return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
 
 
 @login_required

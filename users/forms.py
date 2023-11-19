@@ -96,3 +96,9 @@ class CreateRouteForm(ModelForm):
     class Meta:
         model = Route
         fields = ('driver', 'vehicle', 'destination')
+
+
+class UpdateRouteForm(Form):
+    driver = forms.ModelChoiceField(queryset=Driver.objects.all())
+    vehicle = forms.ModelChoiceField(queryset=Vehicle.objects.all())
+    destination = forms.CharField(widget=forms.TextInput())

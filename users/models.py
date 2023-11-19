@@ -51,7 +51,7 @@ class Route(models.Model):
     ]
 
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
-    admin = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={"is_admin": True})
+    admin = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={"is_staff": True})
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
     destination = models.CharField(max_length=100)
     start_time = models.DateTimeField(default=None, null=True)
