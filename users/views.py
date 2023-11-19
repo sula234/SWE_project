@@ -14,6 +14,8 @@ from .decorators import admin_required, fuel_person_required, driver_required, m
 from django.http import HttpResponse
 from .models import User, Vehicle
 
+from django.http import HttpResponseRedirect
+
 
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
@@ -134,4 +136,4 @@ def driver_home(request):
 @login_required
 @maintenance_person_required
 def maintenance_person_home(request):
-    return HttpResponse("Hello maintenance person!")
+     return HttpResponseRedirect(reverse('task-list'))
