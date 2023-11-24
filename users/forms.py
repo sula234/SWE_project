@@ -118,3 +118,13 @@ class UpdateRouteForm(Form):
     driver = forms.ModelChoiceField(queryset=Driver.objects.all())
     vehicle = forms.ModelChoiceField(queryset=Vehicle.objects.all())
     destination = forms.CharField(widget=forms.TextInput())
+
+
+class UpdateRouteStatusForm(Form):
+    choices = [
+        ('pending', 'pending'),
+        ('in_progress', 'in_progress'),
+        ('finished', 'finished')
+    ]
+
+    status = forms.CharField(widget=forms.Select(choices=choices))
