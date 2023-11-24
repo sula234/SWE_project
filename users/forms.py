@@ -37,7 +37,14 @@ class DriverSignUpForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput())
 
     first_name = forms.CharField(widget=forms.TextInput())
+    middle_name = forms.CharField(widget=forms.TextInput())
     last_name = forms.CharField(widget=forms.TextInput())
+
+    uin = forms.CharField(widget=forms.TextInput())
+
+    address = forms.CharField(widget=forms.TextInput())
+    phone_number = forms.CharField(widget=forms.TextInput())
+    driving_license = forms.CharField(widget=forms.TextInput())
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -49,7 +56,16 @@ class DriverSignUpForm(UserCreationForm):
         user.is_driver = True
         if commit:
             user.save()
-        teacher = Driver.objects.create(user=user, first_name=self.cleaned_data.get('first_name'), last_name=self.cleaned_data.get('last_name'))
+            driver = Driver.objects.create(
+                                           user=user, 
+                                           first_name=self.cleaned_data.get('first_name'), 
+                                           middle_name=self.cleaned_data.get('middle_name'),
+                                           last_name=self.cleaned_data.get('last_name'),
+                                           uin = self.cleaned_data.get('uin'),
+                                           address = self.cleaned_data.get('address'),
+                                           phone_number = self.cleaned_data.get('phone_number'),
+                                           driving_license = self.cleaned_data.get('driving_license'),
+                                           )
 
         return user
     
