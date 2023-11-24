@@ -56,6 +56,18 @@ class Vehicle(models.Model):
     def __str__(self):
         return f'{self.manufacturer} {self.model} {self.license_plate}'
 
+class FuelReport(models.Model):
+    user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    driver = models.ForeignKey(Driver, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    vehicle = models.ForeignKey(Vehicle, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    cost = models.FloatField(default=0.0)
+    fuelAmount = models.FloatField(default=0.0)
+    totalCost = models.FloatField(default=0.0)
+    driverPhoto = models.ImageField(upload_to='images/')
+    carPhoto = models.ImageField(upload_to='images/')
+    fuelLevelPhotoBefore = models.ImageField(upload_to='images/')
+    fuelLevelPhotoAfter = models.ImageField(upload_to='images/')
+
 
 class Route(models.Model):
     enums = [
