@@ -2,17 +2,17 @@ from logging import warn
 from re import template
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
-from django.views.generic import CreateView
+from django.views.generic import CreateView, View
 
-from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm
+from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm, UpdateRouteStatusForm
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .decorators import admin_required, fuel_person_required, driver_required, maintenance_person_required
+from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required
 
 from django.http import HttpResponse
-from .models import Route, User, Vehicle
+from .models import Driver, Route, User, Vehicle
 
 from django.http import HttpResponseRedirect
 
@@ -133,11 +133,14 @@ def assign_vehicle(request):
     return render(request, 'forms/assign_vehicle.html', {'form': form})
 
 
-@login_required
-@admin_required
-def routes(request):
-    print(list(Route.objects.all()))
-    return render(request, 'pages/route_list.html', {'routes': list(Route.objects.all())})
+@method_decorator(admin_or_driver, name='get')
+class Routes(View):
+    def get(self, request):
+        user = request.user
+        if user.is_driver:
+            driver = Driver.objects.get(user=user)
+            return render(request, 'pages/route_list.html', {'routes': list(Route.objects.filter(driver=driver))})
+        return render(request, 'pages/route_list.html', {'routes': list(Route.objects.all())})
 
 
 @login_required
@@ -155,6 +158,22 @@ def update_route(request, pk):
             return redirect('routes')
     else:
         form = UpdateRouteForm(initial=initial)
+    return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
+
+
+@login_required
+@driver_required
+def update_route(request, pk):
+    route = Route.objects.get(pk=pk)
+    initial = {'status': route.status}
+    if request.method == 'POST':
+        form = UpdateRouteStatusForm(request.POST)
+        if form.is_valid():
+            route.status = form.cleaned_data['status']
+            route.save()
+            return redirect('routes')
+    else:
+        form = UpdateRouteStatusForm(initial=initial)
     return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
 
 

@@ -21,13 +21,24 @@ class FuelPreson(models.Model):
     last_name = models.CharField(max_length=100)
     g_station_name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.user
+
     # TODO: FUELING INFO
 
     
 class Driver(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='driver')
+    uin = models.CharField(max_length=12, unique=True)
     first_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=12, unique=True)
+    driving_license = models.CharField(max_length=24, unique=True)
+
+    def __str__(self) -> str:
+        return f'{self.user} ({self.first_name} {self.last_name})'
 
 
 class Vehicle(models.Model):
@@ -41,6 +52,21 @@ class Vehicle(models.Model):
     capacity = models.IntegerField()
     mileage = models.IntegerField()
     cost = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'{self.manufacturer} {self.model} {self.license_plate}'
+
+class FuelReport(models.Model):
+    user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    driver = models.ForeignKey(Driver, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    vehicle = models.ForeignKey(Vehicle, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    cost = models.FloatField(default=0.0)
+    fuelAmount = models.FloatField(default=0.0)
+    totalCost = models.FloatField(default=0.0)
+    driverPhoto = models.ImageField(upload_to='images/')
+    carPhoto = models.ImageField(upload_to='images/')
+    fuelLevelPhotoBefore = models.ImageField(upload_to='images/')
+    fuelLevelPhotoAfter = models.ImageField(upload_to='images/')
 
 
 class Route(models.Model):
@@ -58,9 +84,15 @@ class Route(models.Model):
     finish_time = models.DateTimeField(default=None, null=True)
     status = models.CharField(max_length=16, choices=enums, default='pending')
 
+    def __str__(self):
+        return f'{self.driver} {self.vehicle} -> {self.destination}'
+
 
 class MaintenancePerson(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='maintenance_person')
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.user
     # TODO: JOB
