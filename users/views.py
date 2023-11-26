@@ -1,6 +1,6 @@
 from logging import warn
 from re import template
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, View
 
@@ -180,8 +180,19 @@ def update_route(request, pk):
 @login_required
 @admin_required
 def admin_home(request):
+    if request.method == 'POST':
+        driver_id = request.POST.get('driver')
+        return create_report(request, driver_id)
+
     drivers = Driver.objects.all()
-    return render(request, 'pages/manager_page.html', {'items': drivers})
+    return render(request, 'pages/manager_page.html', {'drivers': drivers})
+
+@login_required
+@admin_required
+def create_report(request, driver_id):
+    driver = Driver.objects.get(pk = driver_id)
+    tasks_number = Route.objects.filter( driver=driver_id, status='finished' ).count()
+    return render(request, 'pages/report.html', {'driver': driver, 'tasks_number': tasks_number})
 
 @login_required
 @fuel_person_required
@@ -200,8 +211,4 @@ def driver_home(request):
 def maintenance_person_home(request):
      return HttpResponseRedirect(reverse('task-list'))
 
-@login_required
-@admin_required
-def create_report(request):
-    drivers = Driver.objects.all()
-    return render(request, 'pages/report.html')
+
