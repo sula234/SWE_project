@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import ReportForm
 
+
 @login_required
 @maintenance_person_required
 def band_create(request):
@@ -18,7 +19,6 @@ def band_create(request):
     else:
         form = ReportForm()
     return render(request, 'maintainance_person/report-create.html', {'form': form})
-
 
 
 from django.shortcuts import render, redirect
