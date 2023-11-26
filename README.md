@@ -1,10 +1,16 @@
 # SWE_project
 ## Starting the server
-### Set up the environment
-Create new python vertual environment and install django and Pillow
+### Set up the python environment and install dependencies
+**Linux**
 ```
 $ python -m venv venv
 $ source venv/bin/activate
+$ pip install django Pillow djangorestframwork
+```
+**Windows**
+```
+$ python -m venv venv
+$ .\venv\Scripts\activate 
 $ pip install django Pillow djangorestframwork
 ```
 ### Initialize Database
