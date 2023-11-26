@@ -74,7 +74,9 @@ class Route(models.Model):
     enums = [
         ('pending', 'pending'),
         ('in_progress', 'in_progress'),
-        ('finished', 'finished')
+        ('finished', 'finished'),
+        ('delayed', 'delayed'),
+        ('canceled', 'canceled'),
     ]
 
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)

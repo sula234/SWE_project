@@ -139,10 +139,11 @@ class Routes(View):
         user = request.user
         if user.is_driver:
             driver = Driver.objects.get(user=user)
-            return render(request, 'pages/route_list.html', {'routes': list(Route.objects.filter(driver=driver))})
+            return render(request, 'pages/driver_route_list.html', {'routes': list(Route.objects.filter(driver=driver, status='pending'))})
         return render(request, 'pages/route_list.html', {'routes': list(Route.objects.all())})
 
 
+#   ADMIN ROUTE UPDATE PAGE
 @login_required
 @admin_required
 def update_route(request, pk):
@@ -161,6 +162,7 @@ def update_route(request, pk):
     return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
 
 
+#   DRIVER ROUTE UPDATE PAGE
 @login_required
 @driver_required
 def update_route(request, pk):
@@ -171,10 +173,19 @@ def update_route(request, pk):
         if form.is_valid():
             route.status = form.cleaned_data['status']
             route.save()
-            return redirect('routes')
+            return redirect('driver-home')
     else:
         form = UpdateRouteStatusForm(initial=initial)
     return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
+
+
+@login_required
+@driver_required
+def start_route(request, pk):
+    route = Route.objects.get(pk=pk)
+    route.status = 'in_progress'
+    route.save()
+    return redirect('driver-home')
 
 
 @login_required
@@ -211,8 +222,9 @@ def fueling_person_home(request):
 @driver_required
 def driver_home(request):
     driver = Driver.objects.get(user = request.user)
-    print(driver.first_name)
-    return render(request, 'pages/driver_page.html', {'driver': driver})
+    routes = Route.objects.filter(driver=driver, status='in_progress')
+    print(list(routes))
+    return render(request, 'pages/driver_page.html', {'driver': driver, 'routes': list(routes)})
 
 @login_required
 @maintenance_person_required

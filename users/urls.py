@@ -18,4 +18,5 @@ urlpatterns = [
     path("routes/", views.Routes.as_view(), name="routes"),
     path("routes/<int:pk>", views.update_route, name="update-route"),
     path("report/<int:driver_id>/", views.update_route, name="update-route"),
+    path("route-start/<int:pk>", views.start_route, name="start-route"),
 ]

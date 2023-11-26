@@ -9,7 +9,10 @@
   <body>
     <h1>Route list</h1>
     {% for route in routes%}
-    <li><a href="{% url 'update-route' pk=route.id %}">Driver: {{route.driver}} | Vehicle: {{route.vehicle}} | Destination: {{route.destination}}</a></li>
+    <li>
+      <div>Driver: {{route.driver}} | Vehicle: {{route.vehicle}} | Destination: {{route.destination}}</div>
+      <a href="{% url 'start-route' pk=route.id %}">Start route</a>
+    </li>
     {% endfor %}
   </body>
 </html>

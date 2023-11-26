@@ -13,4 +13,13 @@
     <div>Address: {{ driver.address }}</div>
     <div>Phone number: {{ driver.phone_number }}</div>
     <div>Driver's license ID: {{ driver.driving_license }}</div>
+    <a href="{% url 'routes' %}">view pending routes</a>
+
+    <h1>Active Routes</h1>
+    {% for route in routes%}
+    <li>
+      <div>Driver: {{route.driver}} | Vehicle: {{route.vehicle}} | Destination: {{route.destination}}</div>
+      <a href="{% url 'update-route' pk=route.id %}">Update route status</a>
+    </li>
+    {% endfor %}
 </html>
