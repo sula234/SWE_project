@@ -7,9 +7,9 @@
                 <p>Due Date: {{ task.due_date }}</p>
                 <p>Priority: {{ task.get_priority_display }}</p>
                 <p>Completed: {{ task.completed }}</p>
-                <a href="{% url 'edit-task' task.id %}">Edit</a>
-                <a href="{% url 'delete-task' task.id %}">Delete</a>
-                <a href="{% url 'create-report' %}">Submit Report</a>
+                <a href="{% url 'products:edit-task' task.id %}">Edit</a>
+                <a href="{% url 'products:delete-task' task.id %}">Delete</a>
+                <a href="{% url 'products:create_report' %}">Submit Report</a>
             </li>
 
             {% empty %}
@@ -17,4 +17,4 @@
         {% endfor %}
 
     </ul>
-    <a href="{% url 'create-task' %}">Add New Task</a>
+    <a href="{% url 'products:create-task' %}">Add New Task</a>

@@ -229,6 +229,6 @@ def driver_home(request):
 @login_required
 @maintenance_person_required
 def maintenance_person_home(request):
-     return HttpResponseRedirect(reverse('task-list'))
+     return HttpResponseRedirect(reverse('products:task-list'))
 
 
