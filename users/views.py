@@ -191,8 +191,16 @@ def admin_home(request):
 @admin_required
 def create_report(request, driver_id):
     driver = Driver.objects.get(pk = driver_id)
-    tasks_number = Route.objects.filter( driver=driver_id, status='finished' ).count()
-    return render(request, 'pages/report.html', {'driver': driver, 'tasks_number': tasks_number})
+    routes = Route.objects.filter( driver=driver_id, status='pending' )
+    tasks_number = routes.count()
+    total_distance = 0
+    total_time = 0
+    for route in routes:
+        if( route.finish_time is not None and route.start_time is not None):
+            total_time += route.finish_time - route.start_time
+        total_distance += route.distance
+    return render(request, 'pages/report.html', {'driver': driver, 'routes': routes, 'tasks_number': tasks_number,
+                                                 'total_distance': total_distance, 'total_time': total_time})
 
 @login_required
 @fuel_person_required

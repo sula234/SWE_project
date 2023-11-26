@@ -88,6 +88,9 @@ class Route(models.Model):
 
     def __str__(self):
         return f'{self.driver} {self.vehicle} -> {self.destination}'
+    def duration(self):
+        if (self.finish_time is not None and self.start_time is not None):
+             return self.finish_time - self.start_time
 
 
 class MaintenancePerson(models.Model):

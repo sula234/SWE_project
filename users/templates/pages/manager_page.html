@@ -20,7 +20,6 @@
     <h1>Create report</h1>
     <form method="post" action="{% url 'admin-home' %}">
         {% csrf_token %}
-        {{ form.as_p }}
         <button type="submit">Create report about: </button>
         <select name="driver">
             {% for driver in drivers %}
