@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Personal Information</h1>
-    <div>Name: {{ driver.given_name + driver.middlename + driver.surname }} </div>
+    <div>Name: {{ driver.first_name }} {{ driver.middle_name }} {{ driver.last_name }} </div>
     <div>UIN: {{ driver.uin }}</div>
     <div>Address: {{ driver.address }}</div>
     <div>Phone number: {{ driver.phone_number }}</div>
