@@ -69,6 +69,7 @@ class FuelReport(models.Model):
     fuelLevelPhotoAfter = models.ImageField(upload_to='images/')
 
 
+
 class Route(models.Model):
     enums = [
         ('pending', 'pending'),

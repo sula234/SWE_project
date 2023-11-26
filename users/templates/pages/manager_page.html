@@ -17,4 +17,11 @@
     <h1>Manage tasks</h1>
     <a href="{% url 'create-route' %}">Create new route</a>
     <a href="{% url 'routes' %}">View routes</a>
+    <h1>Create report</h1>
+    <button type="submit">Create report about: </button>
+    <select name="item">
+        {% for item in items %}
+            <option value="{{ item.id }}">{{ item.first_name }} {{ item.last_name }}</option>
+        {% endfor %}
+    </select>
 </html>

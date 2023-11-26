@@ -180,7 +180,8 @@ def update_route(request, pk):
 @login_required
 @admin_required
 def admin_home(request):
-    return render(request, 'pages/manager_page.html')
+    drivers = Driver.objects.all()
+    return render(request, 'pages/manager_page.html', {'items': drivers})
 
 @login_required
 @fuel_person_required
@@ -198,3 +199,9 @@ def driver_home(request):
 @maintenance_person_required
 def maintenance_person_home(request):
      return HttpResponseRedirect(reverse('task-list'))
+
+@login_required
+@admin_required
+def create_report(request):
+    drivers = Driver.objects.all()
+    return render(request, 'pages/report.html')
