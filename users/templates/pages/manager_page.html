@@ -1,20 +1,37 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Managment Page</title>
+    <link rel="stylesheet" href="{% static 'css/manager_page_styles.css' %}" type="text/css" />
+    <title>Management Page</title>
 </head>
 <body>
-    <h1>Add new users</h1>
-    <a href="{% url 'driver-signup' %}" type="button">Add new driver</a>
-    <a href="{% url 'fuel-person-signup' %}" type="button">Add new fueling person</a>
-    <a href="{% url 'maintenance-person-signup' %}" type="button">Add new mainenance person</a>
-    <h1>Manage Vehicle</h1>
-    <a href="{% url 'create-vehicle' %}">Add new vehicle</a>
-    <a href="{% url 'assign-vehicle' %}">Assign vehicle to a driver</a>
-    <h1>Manage tasks</h1>
-    <a href="{% url 'create-route' %}">Create new route</a>
-    <a href="{% url 'routes' %}">View routes</a>
+    <h1 style="text-align: center">Admin page</h1>
+    <div class="container_main">
+        <div class="container">
+            <h3>Users</h3>
+            <div class="container_links">
+                <a href="{% url 'driver-signup' %}" type="button">Add new driver</a>
+                <a href="{% url 'fuel-person-signup' %}" type="button">Add new fueling person</a>
+                <a href="{% url 'maintenance-person-signup' %}" type="button">Add new maintenance person</a>
+            </div>
+        </div>
+        <div class="container">
+            <h3>Vehicle</h3>
+            <div class="container_links">
+                <a href="{% url 'assign-vehicle' %}">Assign vehicle to a driver</a>
+                <a href="{% url 'create-vehicle' %}">Add new vehicle</a>
+            </div>
+        </div>
+        <div class="container">
+            <h3>Routes</h3>
+            <div class="container_links">
+                <a href="{% url 'routes' %}">View routes</a>
+                <a href="{% url 'create-route' %}">Create new route</a>
+            </div>
+        </div>
+    </div>
 </html>

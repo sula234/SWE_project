@@ -4,6 +4,8 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, View
 
+from django.views.generic import TemplateView
+
 from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm, UpdateRouteStatusForm
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
@@ -15,6 +17,19 @@ from django.http import HttpResponse
 from .models import Driver, Route, User, Vehicle
 
 from django.http import HttpResponseRedirect
+
+###########################
+
+class HomePageView(TemplateView):
+    template_name = "index.html"
+
+# class AboutPageView(TemplateView):
+#     template_name = "about.html"
+#
+class SignInPageView(TemplateView):
+    template_name = "login.html"
+
+###########################
 
 
 class LoginView(auth_views.LoginView):

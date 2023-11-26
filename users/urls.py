@@ -17,4 +17,6 @@ urlpatterns = [
     path("create/route", views.create_route, name="create-route"),
     path("routes/", views.Routes.as_view(), name="routes"),
     path("routes/<int:pk>", views.update_route, name="update-route"),
+
+    path('', views.HomePageView.as_view(), name='home'),
 ]
