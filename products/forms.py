@@ -14,7 +14,7 @@ class reportForm(forms.ModelForm):
         model = report
         fields = '__all__'
         widgets = {
-            'title': forms.TextInput(
+            'Full name': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                     }
@@ -40,7 +40,7 @@ class VechilePartForm(forms.ModelForm):
         model = VechilePart
         fields = '__all__'
         widgets = {
-            'size': forms.TextInput(
+            'Name': forms.TextInput(
                 attrs={
                     'class': 'form-control'
                     }

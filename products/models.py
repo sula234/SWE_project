@@ -3,7 +3,7 @@ from users.models import User
 
 
 class report(models.Model):
-    title = models.CharField(max_length=150)
+    full_name = models.CharField(max_length=150)
     short_description = models.TextField(max_length=100)
 
     class Meta:
@@ -27,7 +27,7 @@ class VechilePart(models.Model):
     report = models.ForeignKey(
         report, on_delete=models.CASCADE
         )
-    size = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=12, decimal_places=2)
 

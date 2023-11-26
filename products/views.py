@@ -41,7 +41,7 @@ class reportInline():
                 formset_save_func(formset)
             else:
                 formset.save()
-        return redirect('reports:list_reports')
+        return redirect('reports:task-list')
 
     def formset_VechileParts_valid(self, formset):
         """
