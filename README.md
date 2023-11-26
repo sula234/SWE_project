@@ -5,8 +5,7 @@ Create new python vertual environment and install django and Pillow
 ```
 $ python -m venv venv
 $ source venv/bin/activate
-$ pip install django Pillow
-$ pip install djangorestframwork
+$ pip install django Pillow djangorestframwork
 ```
 ### Initialize Database
 You need to run the following commands after first install or after changing models.py file
