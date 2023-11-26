@@ -190,7 +190,8 @@ def fueling_person_home(request):
 @login_required
 @driver_required
 def driver_home(request):
-    return HttpResponse("Hello driver!")
+    driver = Driver.objects.filter(user = request.user)
+    return render(request, 'pages/driver_page.html', {'driver': driver})
 
 @login_required
 @maintenance_person_required
