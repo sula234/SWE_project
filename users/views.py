@@ -18,7 +18,7 @@ from .models import Driver, Route, User, Vehicle, FuelPreson
 from .models import Auction, AuctionImage, Driver, Route, User, Vehicle, is_admin
 
 from django.http import HttpResponseRedirect
-
+from datetime import datetime
 
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
@@ -211,10 +211,14 @@ def create_report(request, driver_id):
     total_time = 0
     for route in routes:
         if( route.finish_time is not None and route.start_time is not None):
-            total_time += route.finish_time - route.start_time
+            total_time += (route.finish_time - route.start_time).days
         total_distance += route.distance
+    labels = [route.start_time.strftime('%Y-%m-%d') + ' ' + route.finish_time.strftime('%Y-%m-%d') for route in routes]
+    data = [route.distance for route in routes]
+
     return render(request, 'pages/report.html', {'driver': driver, 'routes': routes, 'tasks_number': tasks_number,
-                                                 'total_distance': total_distance, 'total_time': total_time})
+                                                 'total_distance': total_distance, 'total_time': total_time,
+                                                 'labels': labels, 'data': data})
 
 @login_required
 @fuel_person_required

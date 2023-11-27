@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Driver Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <h1>Driver:</h1>
@@ -24,6 +25,33 @@
     </ul>
     <p>Total tasks: {{ tasks_number }}</p>
     <p>Total distance: {{ total_distance }}</p>
-    <p>Total time: {{ total_time }}</p>
+    <p>Total time: {{ total_time }} days</p>
+
+    <h1>Charts:</h1>
+    <canvas id="distanceChart" width="400" height="200"></canvas>
+
+    <script>
+        var ctx = document.getElementById('distanceChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: 'Distance',
+                    data: {{ data|safe }},
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
