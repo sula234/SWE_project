@@ -122,9 +122,9 @@ class UpdateRouteForm(Form):
 
 class UpdateRouteStatusForm(Form):
     choices = [
-        ('pending', 'pending'),
-        ('in_progress', 'in_progress'),
-        ('finished', 'finished')
+        ('completed', 'completed'),
+        ('canceled', 'canceled'),
+        ('delayed', 'delayed')
     ]
 
     status = forms.CharField(widget=forms.Select(choices=choices))

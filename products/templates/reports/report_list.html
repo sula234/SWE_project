@@ -1,0 +1,17 @@
+<!-- report_list.html -->
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="card">
+        <div class="card-header card-header-secondary">
+            <h4 class="card-title">Reports</h4>
+            <!-- <a href="{% url 'reports:create_report' %}">Add more reports</a> -->
+        </div>
+        <ul>
+            {% for report in reports %}
+                <li class="card-body">{{ report.full_name }} | <a href="{% url 'reports:update_report' report.id %}">View or Edit</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

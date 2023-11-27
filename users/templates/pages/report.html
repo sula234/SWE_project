@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Report</title>
+</head>
+<body>
+    <h1>Driver:</h1>
+    <p>First Name: {{ driver.first_name }}</p>
+    <p>Last Name: {{ driver.last_name }}</p>
+    <h1>Done tasks:</h1>
+    <ul>
+        {% for route in routes %}
+            <li>Task info: </li>
+            <p>Destination: {{ route.destination }}</p>
+            <p>Distance: {{ route.distance }}</p>
+            {% if route.finish_time is not None and route.start_time is not None %}
+                <p>Time spent: {{ route.duration }}</p>
+            {% else %}
+                <p>Time spent: 0</p>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <p>Total tasks: {{ tasks_number }}</p>
+    <p>Total distance: {{ total_distance }}</p>
+    <p>Total time: {{ total_time }}</p>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Page</title>
+</head>
+<body>
+    <h1>Personal Information</h1>
+    <div>Name: {{ driver.first_name }} {{ driver.middle_name }} {{ driver.last_name }} </div>
+    <div>UIN: {{ driver.uin }}</div>
+    <div>Address: {{ driver.address }}</div>
+    <div>Phone number: {{ driver.phone_number }}</div>
+    <div>Driver's license ID: {{ driver.driving_license }}</div>
+    <a href="{% url 'routes' %}">view pending routes</a>
+
+    <h1>Active Routes</h1>
+    {% for route in routes%}
+    <li>
+      <div>Driver: {{route.driver}} | Vehicle: {{route.vehicle}} | Destination: {{route.destination}}</div>
+      <a href="{% url 'update-route' pk=route.id %}">Update route status</a>
+    </li>
+    {% endfor %}
+    <h1>Route history</h1>
+    {% for route in history%}
+    <li>
+      <div>{{route.vehicle}} | From: {{route.origin}} To: {{route.destination}} | Distance: {{route.distance}}</div>
+      <div>
+        {{route.start_time}} - {{route.finish_time}}
+      </div>
+    </li>
+    {% endfor %}
+</html>

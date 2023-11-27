@@ -9,29 +9,53 @@
     <title>Management Page</title>
 </head>
 <body>
-    <h1 style="text-align: center">Admin page</h1>
-    <div class="container_main">
-        <div class="container">
-            <h3>Users</h3>
-            <div class="container_links">
-                <a href="{% url 'driver-signup' %}" type="button">Add new driver</a>
-                <a href="{% url 'fuel-person-signup' %}" type="button">Add new fueling person</a>
-                <a href="{% url 'maintenance-person-signup' %}" type="button">Add new maintenance person</a>
-            </div>
-        </div>
-        <div class="container">
-            <h3>Vehicle</h3>
-            <div class="container_links">
-                <a href="{% url 'assign-vehicle' %}">Assign vehicle to a driver</a>
-                <a href="{% url 'create-vehicle' %}">Add new vehicle</a>
-            </div>
-        </div>
-        <div class="container">
-            <h3>Routes</h3>
-            <div class="container_links">
-                <a href="{% url 'routes' %}">View routes</a>
-                <a href="{% url 'create-route' %}">Create new route</a>
-            </div>
-        </div>
-    </div>
+<!--<<<<<<< HEAD-->
+<!--    <h1 style="text-align: center">Admin page</h1>-->
+<!--    <div class="container_main">-->
+<!--        <div class="container">-->
+<!--            <h3>Users</h3>-->
+<!--            <div class="container_links">-->
+<!--                <a href="{% url 'driver-signup' %}" type="button">Add new driver</a>-->
+<!--                <a href="{% url 'fuel-person-signup' %}" type="button">Add new fueling person</a>-->
+<!--                <a href="{% url 'maintenance-person-signup' %}" type="button">Add new maintenance person</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="container">-->
+<!--            <h3>Vehicle</h3>-->
+<!--            <div class="container_links">-->
+<!--                <a href="{% url 'assign-vehicle' %}">Assign vehicle to a driver</a>-->
+<!--                <a href="{% url 'create-vehicle' %}">Add new vehicle</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="container">-->
+<!--            <h3>Routes</h3>-->
+<!--            <div class="container_links">-->
+<!--                <a href="{% url 'routes' %}">View routes</a>-->
+<!--                <a href="{% url 'create-route' %}">Create new route</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--=======-->
+    <h1>Add new users</h1>
+    <a href="{% url 'driver-signup' %}" type="button">Add new driver</a>
+    <a href="{% url 'fuel-person-signup' %}" type="button">Add new fueling person</a>
+    <a href="{% url 'maintenance-person-signup' %}" type="button">Add new mainenance person</a>
+    <h1>Manage Vehicle</h1>
+    <a href="{% url 'create-vehicle' %}">Add new vehicle</a>
+    <a href="{% url 'assign-vehicle' %}">Assign vehicle to a driver</a>
+    <h1>Manage tasks</h1>
+    <a href="{% url 'create-route' %}">Create new route</a>
+    <a href="{% url 'routes' %}">View routes</a>
+    <a href="{% url 'products:list_reports' %}">View all maintainance reports</a>
+    <h1>Create report</h1>
+    <form method="post" action="{% url 'admin-home' %}">
+        {% csrf_token %}
+        <button type="submit">Create report about: </button>
+        <select name="driver">
+            {% for driver in drivers %}
+                <option value="{{ driver.user.id }}"> {{ driver.first_name }} {{ driver.last_name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+<!--&gt;>>>>>> main-->
 </html>

@@ -69,23 +69,31 @@ class FuelReport(models.Model):
     fuelLevelPhotoAfter = models.ImageField(upload_to='images/')
 
 
+
 class Route(models.Model):
     enums = [
         ('pending', 'pending'),
         ('in_progress', 'in_progress'),
-        ('finished', 'finished')
+        ('finished', 'finished'),
+        ('delayed', 'delayed'),
+        ('canceled', 'canceled'),
     ]
 
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
     admin = models.ForeignKey(User, on_delete=models.CASCADE, limit_choices_to={"is_staff": True})
     vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    origin = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
+    distance = models.IntegerField(default=0)
     start_time = models.DateTimeField(default=None, null=True)
     finish_time = models.DateTimeField(default=None, null=True)
     status = models.CharField(max_length=16, choices=enums, default='pending')
 
     def __str__(self):
         return f'{self.driver} {self.vehicle} -> {self.destination}'
+    def duration(self):
+        if (self.finish_time is not None and self.start_time is not None):
+             return self.finish_time - self.start_time
 
 
 class MaintenancePerson(models.Model):
