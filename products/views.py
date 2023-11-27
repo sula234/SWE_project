@@ -19,6 +19,18 @@ from django.utils.decorators import method_decorator
 from users.decorators import maintenance_person_required, admin_required, admin_or_maintenance_person
 from django.contrib.auth.decorators import login_required
 
+# from users.models import MaintenancePerson
+from users.models import MaintenancePerson
+####################
+
+def maintenancePerson_data(request):
+#     MaintenancePerson_data = list(MaintenancePerson.objects.all())
+    MaintenancePerson_data = MaintenancePerson.objects.get(user=request.user)
+    return render(request, 'maintainance_person/task_list.html',
+    {'MaintenancePerson_data': MaintenancePerson_data})
+
+####################
+
 
 
 class reportInline():

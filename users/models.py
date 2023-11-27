@@ -22,7 +22,7 @@ class FuelPreson(models.Model):
     g_station_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user
+        return f'{self.user}'
 
     # TODO: FUELING INFO
 
@@ -102,5 +102,5 @@ class MaintenancePerson(models.Model):
     last_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user
+        return f'{self.user}'
     # TODO: JOB

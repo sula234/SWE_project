@@ -19,5 +19,6 @@ urlpatterns = [
     path("routes/<int:pk>", views.update_route, name="update-route"),
     path("report/<int:driver_id>/", views.update_route, name="update-route"),
     path("route-start/<int:pk>", views.start_route, name="start-route"),
-    path("index", views.HomePageView.as_view(), name="home")
+    path("index1", views.HomePageView.as_view(), name="home"),
+    path("maintenance_person_data", views.maintenancePerson_data, name="maintenancePerson_data"),
 ]

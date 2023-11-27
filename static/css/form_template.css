@@ -22,7 +22,7 @@ form p span.helptext {
     font-size: 1rem;
 }
 
-form p input, form p select {
+form p input, form p select, form p textarea {
     display: block;
     min-width: 330px;
     width: 100%;
@@ -37,12 +37,6 @@ form p input, form p select {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-/*form p select {*/
-/*    display: block;*/
-/*    min-width: 330px;*/
-/*    width: 100%;*/
-/*    padding: 0.375rem 0rem;*/
-/*}*/
 
 .blue-button {
     display: block;
@@ -55,4 +49,10 @@ form p input, form p select {
     background-color: #007bff;
     border: 1px solid transparent;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.back-button {
+    text-decoration: none;
+    width: 50%;
+    margin: 1rem auto;
 }

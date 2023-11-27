@@ -14,20 +14,20 @@ from django.urls import reverse
 from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required
 
 from django.http import HttpResponse
-from .models import Driver, Route, User, Vehicle
+from .models import Driver, Route, User, Vehicle, MaintenancePerson
 
 from django.http import HttpResponseRedirect
 
 ###########################
 
 class HomePageView(TemplateView):
-    template_name = "index.html"
+    template_name = "users/index1.html"
 
-# class AboutPageView(TemplateView):
-#     template_name = "about.html"
-#
-class SignInPageView(TemplateView):
-    template_name = "login.html"
+def maintenancePerson_data(request):
+#     MaintenancePerson_data = list(MaintenancePerson.objects.all())
+    MaintenancePerson_data = MaintenancePerson.objects.get(user=request.user)
+    return render(request, 'users/maintenance_person_data.html',
+    {'MaintenancePerson_data': MaintenancePerson_data})
 
 ###########################
 
