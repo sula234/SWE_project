@@ -18,6 +18,9 @@
     <a href="{% url 'create-route' %}">Create new route</a>
     <a href="{% url 'routes' %}">View routes</a>
     <a href="{% url 'products:list_reports' %}">View all maintainance reports</a>
+    <h1>Auctions</h1>
+    <a href="{% url 'create-auction' %}">Create new auction</a>
+    <a href="{% url 'auctions' %}">View all auctions</a>
     <h1>Create report</h1>
     <form method="post" action="{% url 'admin-home' %}">
         {% csrf_token %}

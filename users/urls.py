@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 from django.contrib.auth import views as auth_views
 
@@ -19,4 +21,10 @@ urlpatterns = [
     path("routes/<int:pk>", views.update_route, name="update-route"),
     path("report/<int:driver_id>/", views.update_route, name="update-route"),
     path("route-start/<int:pk>", views.start_route, name="start-route"),
-]
+    path("create-auction/", views.create_auction, name="create-auction"),
+    path("auctions/", views.auctions, name="auctions"),
+    path("update_auction/<int:pk>", views.update_auction, name="update-auction"),
+    path("auction/<int:pk>", views.auction, name="auction"),
+    path("upload_image/<int:pk>", views.uploadImage, name="upload-image"),
+    path("delete_image/<int:pk>", views.deleteImage, name="delete-image"),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

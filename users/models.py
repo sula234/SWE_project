@@ -104,3 +104,18 @@ class MaintenancePerson(models.Model):
     def __str__(self):
         return self.user
     # TODO: JOB
+
+
+class Auction(models.Model):
+    vehicle = models.ForeignKey(Vehicle, on_delete=models.CASCADE)
+    admin = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+    description = models.TextField(max_length=1000)
+    physical_condition = models.TextField(max_length=1000)
+
+    def __str__(self):
+        return self.vehicle.model
+
+
+class AuctionImage(models.Model):
+    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    image = models.ImageField(blank=True, upload_to='images')
