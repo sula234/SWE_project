@@ -16,7 +16,7 @@ from .models import (
 )
 
 from django.utils.decorators import method_decorator
-from users.decorators import maintenance_person_required, admin_required
+from users.decorators import maintenance_person_required, admin_required, admin_or_maintenance_person
 from django.contrib.auth.decorators import login_required
 
 
@@ -69,7 +69,7 @@ class reportInline():
 
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(maintenance_person_required, name='dispatch')    
+@method_decorator(admin_or_maintenance_person, name='dispatch')    
 class reportCreate(reportInline, CreateView):
 
     def get_context_data(self, **kwargs):
@@ -106,7 +106,7 @@ class reportUpdate(reportInline, UpdateView):
 
 
 @login_required
-@maintenance_person_required
+@admin_or_maintenance_person
 def delete_image(request, pk):
     try:
         image = Image.objects.get(id=pk)
@@ -124,7 +124,7 @@ def delete_image(request, pk):
 
 
 @login_required
-@maintenance_person_required
+@admin_or_maintenance_person
 def delete_VechilePart(request, pk):
     try:
         VechilePart = VechilePart.objects.get(id=pk)

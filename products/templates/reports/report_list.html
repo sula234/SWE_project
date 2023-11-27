@@ -5,12 +5,12 @@
 {% block content %}
     <div class="card">
         <div class="card-header card-header-secondary">
-            <h4 class="card-title">reports</h4>
-            <a href="{% url 'reports:create_report' %}">Add more reports</a>
+            <h4 class="card-title">Reports</h4>
+            <!-- <a href="{% url 'reports:create_report' %}">Add more reports</a> -->
         </div>
         <ul>
             {% for report in reports %}
-                <li class="card-body">{{ report.title }} | <a href="{% url 'reports:update_report' report.id %}">Edit</a></li>
+                <li class="card-body">{{ report.full_name }} | <a href="{% url 'reports:update_report' report.id %}">View or Edit</a></li>
             {% endfor %}
         </ul>
     </div>

@@ -10,7 +10,7 @@ class report(models.Model):
         verbose_name_plural = 'reports'
 
     def __str__(self):
-        return self.title
+        return self.full_name
 
 
 class Image(models.Model):
