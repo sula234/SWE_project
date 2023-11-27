@@ -22,4 +22,13 @@
       <a href="{% url 'update-route' pk=route.id %}">Update route status</a>
     </li>
     {% endfor %}
+    <h1>Route history</h1>
+    {% for route in history%}
+    <li>
+      <div>{{route.vehicle}} | From: {{route.origin}} To: {{route.destination}} | Distance: {{route.distance}}</div>
+      <div>
+        {{route.start_time}} - {{route.finish_time}}
+      </div>
+    </li>
+    {% endfor %}
 </html>

@@ -223,8 +223,8 @@ def fueling_person_home(request):
 def driver_home(request):
     driver = Driver.objects.get(user = request.user)
     routes = Route.objects.filter(driver=driver, status='in_progress')
-    print(list(routes))
-    return render(request, 'pages/driver_page.html', {'driver': driver, 'routes': list(routes)})
+    history = Route.objects.filter(driver=driver, status='completed') | Route.objects.filter(driver=driver, status='canceled')
+    return render(request, 'pages/driver_page.html', {'driver': driver, 'routes': list(routes), 'history': list(history)})
 
 @login_required
 @maintenance_person_required
