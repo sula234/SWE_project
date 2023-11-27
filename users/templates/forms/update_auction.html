@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Auction</title>
+  </head>
+  <body>
+    <h1>Update Auction</h1>
+    <form action="{% url 'update-auction' pk=pk%}" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Update Auction">
+    </form>
+    <form action="{% url 'upload-image' pk=pk%}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ imageForm.as_p }}
+      <input type="submit" value="Upload new image">
+    </form>
+    {% for image in images %}
+    <img src="{{image.image.url}}" width="250"/>
+    <a href="{% url 'delete-image' pk=image.pk %}">delete image</a>
+    {% endfor %}
+  </body>
+</html>
