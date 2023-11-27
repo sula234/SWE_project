@@ -1,0 +1,58 @@
+body {
+    display: flex;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+form p {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+form p span.helptext {
+    font-size: 1rem;
+}
+
+form p input, form p select {
+    display: block;
+    min-width: 330px;
+    width: 100%;
+    padding: 0.375rem 0rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/*form p select {*/
+/*    display: block;*/
+/*    min-width: 330px;*/
+/*    width: 100%;*/
+/*    padding: 0.375rem 0rem;*/
+/*}*/
+
+.blue-button {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid transparent;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
