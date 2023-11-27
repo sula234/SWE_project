@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import transaction
 from django.forms.forms import Form
 from django.forms.models import ModelForm
-from .models import Route, User, FuelPreson, Driver, MaintenancePerson, Vehicle
+from .models import Auction, AuctionImage, Route, User, FuelPreson, Driver, MaintenancePerson, Vehicle
 from django import forms
 from django.contrib.auth import get_user_model
 
@@ -128,3 +128,20 @@ class UpdateRouteStatusForm(Form):
     ]
 
     status = forms.CharField(widget=forms.Select(choices=choices))
+
+# AUCTIONS
+class CreateAuctionForm(ModelForm):
+    class Meta:
+        model = Auction
+        fields = ('vehicle', 'description', 'physical_condition')
+
+
+class UpdateAuctionForm(Form):
+    vehicle = forms.ModelChoiceField(queryset=Vehicle.objects.all())
+    description = forms.TextInput()
+    physical_condition = forms.TextInput()
+
+class UploadImageForm(ModelForm):
+    class Meta:
+        model = AuctionImage
+        fields = ["image"]
