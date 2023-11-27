@@ -63,7 +63,7 @@ class FuelReport(models.Model):
     cost = models.FloatField(default=0.0)
     fuelAmount = models.FloatField(default=0.0)
     totalCost = models.FloatField(default=0.0)
-    date = models.DateTimeField(default=None)
+    date = models.DateTimeField(format="%Y-%m-%d %H:%M:%S")
     driverPhoto = models.ImageField(upload_to='images/')
     carPhoto = models.ImageField(upload_to='images/')
     fuelLevelPhotoBefore = models.ImageField(upload_to='images/')
