@@ -9,7 +9,7 @@ from .views import (
 app_name = 'reports'  # 3rd
 
 urlpatterns = [
-    path('', reportList.as_view(), name='list_reports'),
+    path('', reportList, name='list_reports'),
     path('user-specific-reports/', reportListMaintainance, name='specific_list_reports'),
     path('create/', reportCreate.as_view(), name='create_report'),
     path('update/<int:pk>/', reportUpdate.as_view(), name='update_report'),
