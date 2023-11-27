@@ -14,7 +14,7 @@ from django.urls import reverse
 from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required, non_admin_required
 
 from django.http import HttpResponse
-from .models import Driver, Route, User, Vehicle, FuelPreson
+from .models import Driver, Route, User, Vehicle, FuelPreson, FuelReport
 from .models import Auction, AuctionImage, Driver, Route, User, Vehicle, is_admin
 
 from django.http import HttpResponseRedirect
@@ -213,12 +213,24 @@ def create_report(request, driver_id):
         if( route.finish_time is not None and route.start_time is not None):
             total_time += (route.finish_time - route.start_time).days
         total_distance += route.distance
-    labels = [route.start_time.strftime('%Y-%m-%d') + ' ' + route.finish_time.strftime('%Y-%m-%d') for route in routes]
-    data = [route.distance for route in routes]
+    distlabels = [route.start_time.strftime('%Y-%m-%d') + ' ' + route.finish_time.strftime('%Y-%m-%d') for route in routes]
+    distdata = [route.distance for route in routes]
 
+    vehicles = Vehicle.objects.filter( driver = driver_id )
+    fueldata=[]
+    for vehicle in vehicles:
+        fuels = FuelReport.objects.filter( driver=driver_id, vehicle=vehicle.id )
+        labels = [fuel.date.strftime('%Y-%m-%d') for fuel in fuels]
+        data = [fuel.fuelAmount for fuel in fuels]
+        fueldata.append({
+            'vehicle':vehicle.license_plate,
+            'labels':labels,
+            'data':data,
+        })
     return render(request, 'pages/report.html', {'driver': driver, 'routes': routes, 'tasks_number': tasks_number,
                                                  'total_distance': total_distance, 'total_time': total_time,
-                                                 'labels': labels, 'data': data})
+                                                 'distlabels': distlabels, 'distdata': distdata,
+                                                 'fueldata':fueldata})
 
 @login_required
 @fuel_person_required
