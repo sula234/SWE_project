@@ -12,7 +12,7 @@ from django.urls import reverse
 from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required
 
 from django.http import HttpResponse
-from .models import Driver, Route, User, Vehicle
+from .models import Driver, Route, User, Vehicle, FuelPreson
 
 from django.http import HttpResponseRedirect
 
@@ -193,7 +193,7 @@ def start_route(request, pk):
 def admin_home(request):
     if request.method == 'POST':
         driver_id = request.POST.get('driver')
-        return create_report(request, driver_id)
+        return redirect('create_report', driver_id = driver_id)
 
     drivers = Driver.objects.all()
     return render(request, 'pages/manager_page.html', {'drivers': drivers})
@@ -202,7 +202,7 @@ def admin_home(request):
 @admin_required
 def create_report(request, driver_id):
     driver = Driver.objects.get(pk = driver_id)
-    routes = Route.objects.filter( driver=driver_id, status='pending' )
+    routes = Route.objects.filter( driver=driver_id, status='finished' )
     tasks_number = routes.count()
     total_distance = 0
     total_time = 0
@@ -216,7 +216,8 @@ def create_report(request, driver_id):
 @login_required
 @fuel_person_required
 def fueling_person_home(request):
-    return HttpResponse("Hello fuel person!")
+    fuelPerson = FuelPreson.objects.get(user=request.user)
+    return render(request, 'pages/fueling_page.html', {'fuelPerson': fuelPerson})
 
 @login_required
 @driver_required
