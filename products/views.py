@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
+
 class reportInline():
     form_class = reportForm
     model = report
@@ -159,7 +160,21 @@ class reportList(ListView):
 @maintenance_person_required
 def reportListMaintainance(request):
     reports = report.objects.filter(user=request.user)
-    return render(request, 'reports/report_list.html', {'reports': reports})
+    total_prices = []
+
+    for rep in reports:
+        total_price = 0
+        # smth strange happens here 
+        try:
+            for part in VechilePart.objects.filter(report=rep):
+                total_price += part.price * part.quantity
+        except:
+            continue
+
+        total_prices.append(total_price)
+    
+    reports_and_costs = zip(reports, total_prices)
+    return render(request, 'reports/report_list.html', {'reports_and_costs': reports_and_costs})
 
 
 
