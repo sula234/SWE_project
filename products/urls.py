@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (
-    reportList, reportCreate, reportUpdate,
+    reportList, reportCreate, reportUpdate, reportListMaintainance,
     delete_image, delete_VechilePart, task_list, create_task, 
     edit_task, delete_task
 )
@@ -10,6 +10,7 @@ app_name = 'reports'  # 3rd
 
 urlpatterns = [
     path('', reportList.as_view(), name='list_reports'),
+    path('user-specific-reports/', reportListMaintainance, name='specific_list_reports'),
     path('create/', reportCreate.as_view(), name='create_report'),
     path('update/<int:pk>/', reportUpdate.as_view(), name='update_report'),
     path('delete-image/<int:pk>/', delete_image, name='delete_image'),

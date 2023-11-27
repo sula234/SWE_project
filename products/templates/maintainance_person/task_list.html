@@ -10,6 +10,7 @@
                 <a href="{% url 'products:edit-task' task.id %}">Edit</a>
                 <a href="{% url 'products:delete-task' task.id %}">Delete</a>
                 <a href="{% url 'products:create_report' %}">Submit Report</a>
+                <a href="{% url 'products:specific_list_reports' %}">View Your Reports</a>
             </li>
 
             {% empty %}

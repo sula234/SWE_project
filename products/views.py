@@ -96,7 +96,7 @@ class reportCreate(reportInline, CreateView):
             }
 
 @method_decorator(login_required, name='dispatch')
-@method_decorator(admin_required, name='dispatch')    
+@method_decorator(admin_or_maintenance_person, name='dispatch')    
 class reportUpdate(reportInline, UpdateView):
 
     def get_context_data(self, **kwargs):
@@ -153,8 +153,13 @@ class reportList(ListView):
     model = report
     template_name = "reports/report_list.html"
     context_object_name = "reports"
-    
 
+
+@login_required
+@maintenance_person_required
+def reportListMaintainance(request):
+    reports = report.objects.filter(user=request.user)
+    return render(request, 'reports/report_list.html', {'reports': reports})
 
 
 
