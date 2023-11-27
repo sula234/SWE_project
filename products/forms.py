@@ -12,7 +12,7 @@ class reportForm(forms.ModelForm):
 
     class Meta:
         model = report
-        fields = '__all__'
+        fields = ['full_name', 'short_description']
         widgets = {
             'Full name': forms.TextInput(
                 attrs={

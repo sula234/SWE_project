@@ -76,6 +76,12 @@ class reportCreate(reportInline, CreateView):
         ctx = super(reportCreate, self).get_context_data(**kwargs)
         ctx['named_formsets'] = self.get_named_formsets()
         return ctx
+    
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
 
     def get_named_formsets(self):
         if self.request.method == "GET":

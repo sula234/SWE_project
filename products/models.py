@@ -6,6 +6,8 @@ class report(models.Model):
     full_name = models.CharField(max_length=150)
     short_description = models.TextField(max_length=100)
 
+    user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+
     class Meta:
         verbose_name_plural = 'reports'
 
