@@ -17,11 +17,7 @@ urlpatterns = [
     path("create/route", views.create_route, name="create-route"),
     path("routes/", views.Routes.as_view(), name="routes"),
     path("routes/<int:pk>", views.update_route, name="update-route"),
-<<<<<<< HEAD
-
-    path('', views.HomePageView.as_view(), name='home'),
-=======
     path("report/<int:driver_id>/", views.update_route, name="update-route"),
     path("route-start/<int:pk>", views.start_route, name="start-route"),
->>>>>>> main
+    path("index", views.HomePageView.as_view(), name="home")
 ]
