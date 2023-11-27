@@ -22,7 +22,7 @@ class Image(models.Model):
     image = models.ImageField(blank=True, upload_to='images')
 
     def __str__(self):
-        return self.report.title
+        return self.report.full_name
 
 
 class VechilePart(models.Model):
@@ -37,7 +37,7 @@ class VechilePart(models.Model):
         verbose_name_plural = 'vechile part'
 
     def __str__(self):
-        return self.report.title
+        return self.name
 
 
 class Task(models.Model):
