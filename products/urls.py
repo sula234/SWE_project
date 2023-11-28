@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (
     reportList, reportCreate, reportUpdate, reportListMaintainance,
     delete_image, delete_VechilePart, task_list, create_task, 
-    edit_task, delete_task
+    edit_task, delete_task, maintenancePerson_data
 )
 
 app_name = 'reports'  # 3rd
@@ -17,7 +17,7 @@ urlpatterns = [
     path('delete-VechilePart/<int:pk>/', delete_VechilePart, name='delete_VechilePart'),
 
 
-    path('tasks', task_list, name='task-list'),
+    path('tasks', maintenancePerson_data, name='task-list'),
     path('tasks/create/', create_task, name='create-task'),
     path('tasks/edit/<int:task_id>/', edit_task, name='edit-task'),
     path('tasks/delete/<int:task_id>/', delete_task, name='delete-task'),
