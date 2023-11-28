@@ -1,19 +1,26 @@
+from http.client import OK
 from logging import warn
 from re import template
+from django.core.exceptions import BadRequest
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, View
 
+<<<<<<< HEAD
 from django.views.generic import TemplateView
 
 from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm, UpdateRouteStatusForm
+=======
+from .forms import AddVehicleForm, AssignVehicleForm, CreateAuctionForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateAuctionForm, UpdateRouteForm, UpdateRouteStatusForm, UploadImageForm
+>>>>>>> main
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
-from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required
+from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required, non_admin_required
 
 from django.http import HttpResponse
+<<<<<<< HEAD
 from .models import Driver, Route, User, Vehicle, MaintenancePerson
 
 from django.http import HttpResponseRedirect
@@ -31,6 +38,13 @@ def maintenancePerson_data(request):
 
 ###########################
 
+=======
+from .models import Driver, Route, User, Vehicle, FuelPreson, FuelReport
+from .models import Auction, AuctionImage, Driver, Route, User, Vehicle, is_admin
+
+from django.http import HttpResponseRedirect
+from datetime import datetime
+>>>>>>> main
 
 class LoginView(auth_views.LoginView):
     form_class = LoginForm
@@ -208,7 +222,7 @@ def start_route(request, pk):
 def admin_home(request):
     if request.method == 'POST':
         driver_id = request.POST.get('driver')
-        return create_report(request, driver_id)
+        return redirect('create_report', driver_id = driver_id)
 
     drivers = Driver.objects.all()
     return render(request, 'pages/manager_page.html', {'drivers': drivers})
@@ -217,21 +231,38 @@ def admin_home(request):
 @admin_required
 def create_report(request, driver_id):
     driver = Driver.objects.get(pk = driver_id)
-    routes = Route.objects.filter( driver=driver_id, status='pending' )
+    routes = Route.objects.filter( driver=driver_id, status='finished' )
     tasks_number = routes.count()
     total_distance = 0
     total_time = 0
     for route in routes:
         if( route.finish_time is not None and route.start_time is not None):
-            total_time += route.finish_time - route.start_time
+            total_time += (route.finish_time - route.start_time).days
         total_distance += route.distance
+    distlabels = [route.start_time.strftime('%Y-%m-%d') + ' ' + route.finish_time.strftime('%Y-%m-%d') for route in routes]
+    distdata = [route.distance for route in routes]
+
+    vehicles = Vehicle.objects.filter( driver = driver_id )
+    fueldata=[]
+    for vehicle in vehicles:
+        fuels = FuelReport.objects.filter( driver=driver_id, vehicle=vehicle.id )
+        labels = [fuel.date.strftime('%Y-%m-%d') for fuel in fuels]
+        data = [fuel.fuelAmount for fuel in fuels]
+        fueldata.append({
+            'vehicle':vehicle.license_plate,
+            'labels':labels,
+            'data':data,
+        })
     return render(request, 'pages/report.html', {'driver': driver, 'routes': routes, 'tasks_number': tasks_number,
-                                                 'total_distance': total_distance, 'total_time': total_time})
+                                                 'total_distance': total_distance, 'total_time': total_time,
+                                                 'distlabels': distlabels, 'distdata': distdata,
+                                                 'fueldata':fueldata})
 
 @login_required
 @fuel_person_required
 def fueling_person_home(request):
-    return HttpResponse("Hello fuel person!")
+    fuelPerson = FuelPreson.objects.get(user=request.user)
+    return render(request, 'pages/fueling_page.html', {'fuelPerson': fuelPerson})
 
 @login_required
 @driver_required
@@ -247,3 +278,77 @@ def maintenance_person_home(request):
      return HttpResponseRedirect(reverse('products:task-list'))
 
 
+# AUCTIONS
+@login_required
+@admin_required
+def create_auction(request):
+    if request.method == 'POST':
+        form = CreateAuctionForm(request.POST)
+        if form.is_valid():
+            auction = form.save(commit=False)
+            auction.admin = request.user
+            auction.save()
+            return redirect('admin-home')
+    else:
+        form = CreateAuctionForm()
+    return render(request, 'forms/create_auction.html', {'form': form})
+
+
+def auctions(request):
+    auctions = list(Auction.objects.all())
+    data = []
+    for auction in auctions:
+        image = AuctionImage.objects.filter(auction=auction).first()
+        data.append((auction, image))
+    return render(request, 'pages/auction_list.html', {'data': data})
+
+
+@login_required
+@admin_required
+def update_auction(request, pk):
+    auction = Auction.objects.get(pk=pk)
+    initial = {'vehicle': auction.vehicle}
+    images = list(AuctionImage.objects.filter(auction=auction))
+    imageForm = UploadImageForm()
+    if request.method == 'POST':
+        form = UpdateAuctionForm(request.POST)
+        if form.is_valid():
+            auction.vehicle = form.cleaned_data['vehicle']
+            auction.description = form.cleaned_data['description']
+            auction.physical_condition = form.cleaned_data['physical_condition']
+            auction.save()
+            return redirect('auctions')
+    else:
+        form = UpdateAuctionForm(initial=initial)
+    return render(request, 'forms/update_auction.html', {'form': form, 'pk': pk, 'imageForm': imageForm, 'images': images})
+
+@login_required
+def auction(request, pk):
+    user = request.user
+    if user.is_staff:
+        return redirect('update-auction', pk=pk)
+    auction = Auction.objects.get(pk=pk)
+    images = list(AuctionImage.objects.filter(auction=auction))
+    return render(request, 'pages/auction.html', {'auction': auction, 'images': images})
+
+
+@login_required
+@admin_required
+def uploadImage(request, pk):
+    auction = Auction.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = UploadImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.auction = auction
+            image.save()
+            return redirect('update-auction', pk=pk)
+    return BadRequest
+
+
+@login_required
+@admin_required
+def deleteImage(request, pk):
+    image = AuctionImage.objects.get(pk=pk)
+    image.delete()
+    return OK

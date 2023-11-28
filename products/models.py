@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import User
+from users.models import User, Vehicle
 
 
 class report(models.Model):
@@ -7,6 +7,7 @@ class report(models.Model):
     short_description = models.TextField(max_length=100)
 
     user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    vehicle = models.ForeignKey(Vehicle, default=None, null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name_plural = 'reports'

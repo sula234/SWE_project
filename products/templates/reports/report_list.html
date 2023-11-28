@@ -9,8 +9,9 @@
             <!-- <a href="{% url 'reports:create_report' %}">Add more reports</a> -->
         </div>
         <ul>
-            {% for report in reports %}
+            {% for report, cost in reports_and_costs %}
                 <li class="card-body">{{ report.full_name }} | <a href="{% url 'reports:update_report' report.id %}">View or Edit</a></li>
+                <h4>Total cost of vechile parts: {{ cost }} </h4>
             {% endfor %}
         </ul>
     </div>

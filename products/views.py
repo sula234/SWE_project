@@ -33,6 +33,7 @@ def maintenancePerson_data(request):
 
 
 
+
 class reportInline():
     form_class = reportForm
     model = report
@@ -159,19 +160,46 @@ def delete_VechilePart(request, pk):
     return redirect('reports:update_report', pk=VechilePart.report.id)
 
 
-@method_decorator(login_required, name='dispatch')
-@method_decorator(admin_required, name='dispatch')    
-class reportList(ListView):
-    model = report
-    template_name = "reports/report_list.html"
-    context_object_name = "reports"
+@login_required
+@admin_required
+def reportList(request):
+    reports = report.objects.all()
+    total_prices = []
+
+    for rep in reports:
+        total_price = 0
+        # smth strange happens here 
+        try:
+            for part in VechilePart.objects.filter(report=rep):
+                total_price += part.price * part.quantity
+        except:
+            continue
+
+        total_prices.append(total_price)
+    
+    reports_and_costs = zip(reports, total_prices)
+    return render(request, 'reports/report_list.html', {'reports_and_costs': reports_and_costs})
 
 
 @login_required
 @maintenance_person_required
 def reportListMaintainance(request):
     reports = report.objects.filter(user=request.user)
-    return render(request, 'reports/report_list.html', {'reports': reports})
+    total_prices = []
+
+    for rep in reports:
+        total_price = 0
+        # smth strange happens here 
+        try:
+            for part in VechilePart.objects.filter(report=rep):
+                total_price += part.price * part.quantity
+        except:
+            continue
+
+        total_prices.append(total_price)
+    
+    reports_and_costs = zip(reports, total_prices)
+    return render(request, 'reports/report_list.html', {'reports_and_costs': reports_and_costs})
 
 
 

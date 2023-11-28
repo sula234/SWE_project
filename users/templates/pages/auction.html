@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Report</title>
+</head>
+<body>
+  <h1>{{auction.vehicle}}</h1>
+  <h3>Description</h3>
+  <div>
+    {{auction.description}}
+  </div>
+  <h3>Physical condition</h3>
+  <div>
+    {{auction.physical_condition}}
+  </div>
+  <h3>Images</h3>
+  {% for image in images %}
+  <img src="{{image.image.url}}" width="250"/>
+  {% endfor %}
+</body>
+</html>
