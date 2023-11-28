@@ -1,0 +1,35 @@
+ol {
+    font-size: 1.35rem;
+}
+
+ul {
+    margin-bottom: 2.5rem;
+    font-size: 1.35rem;
+}
+
+ul li {
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 1em;
+}
+ul > li:before {
+    display: inline-block;
+    content: "-";
+    width: 1em;
+    /*margin-left: -1em;*/
+}
+
+.blue-button {
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    color: #fff;
+    background-color: #007bff;
+    border: 1px solid transparent;
+}

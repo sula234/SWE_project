@@ -9,6 +9,17 @@
     <title>Management Page</title>
 </head>
 <body>
+<header class="header">
+    <div class="header_logo">
+        <h1>VMS for NU</h1>
+    </div>
+    <div class="header_nav">
+        <a href="{%url 'home'%}">Home</a>
+        <a href="#contacts">Contacts</a>
+        <a href="{%url 'login'%}" class="">Sign in</a>
+    </div>
+</header>
+
     <h1 style="text-align: center">Admin page</h1>
     <div class="container_main">
         <div class="container">
@@ -38,12 +49,12 @@
             <h3>Create report</h3>
             <form method="post" action="{% url 'admin-home' %}">
                 {% csrf_token %}
+                <button type="submit" class="blue-button creat-button">Create report about: </button>
                 <select name="driver">
                     {% for driver in drivers %}
                     <option value="{{ driver.user.id }}"> {{ driver.first_name }} {{ driver.last_name }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit" class="blue-button">Create report about: </button>
             </form>
         </div>
     </div>

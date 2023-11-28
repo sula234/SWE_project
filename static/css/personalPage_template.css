@@ -21,6 +21,11 @@ h2 {
     font-size: 1.25rem;
 }
 
+.container_row{
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
 .blue-button {
     display: block;
     width: 100%;
@@ -56,5 +61,13 @@ h2 {
 .header_nav a {
     color: black;
     text-decoration: none;
+    font-size: 1.25rem;
+}
+
+.routes_top, .routes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 0.5fr;
+    gap: 0.5rem;
+    row-gap: 1.5rem;
     font-size: 1.25rem;
 }

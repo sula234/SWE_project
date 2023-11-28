@@ -1,34 +1,62 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/personalPage_template.css' %}" type="text/css" />
     <title>Personal Page</title>
 </head>
 <body>
-    <h1>Personal Information</h1>
-    <div>Name: {{ driver.first_name }} {{ driver.middle_name }} {{ driver.last_name }} </div>
-    <div>UIN: {{ driver.uin }}</div>
-    <div>Address: {{ driver.address }}</div>
-    <div>Phone number: {{ driver.phone_number }}</div>
-    <div>Driver's license ID: {{ driver.driving_license }}</div>
-    <a href="{% url 'routes' %}">view pending routes</a>
-
-    <h1>Active Routes</h1>
+<header class="header">
+    <div class="header_logo">
+        <h1>VMS for NU</h1>
+    </div>
+    <div class="header_nav">
+        <a href="{%url 'home'%}">Home</a>
+        <a href="#contacts">Contacts</a>
+        <a href="{%url 'login'%}" class="">Sign in</a>
+    </div>
+</header>
+<h2>Personal Information</h2>
+<div class="container">
+    <div class="container_row">Name: {{ driver.first_name }} {{ driver.middle_name }} {{ driver.last_name }} </div>
+    <div class="container_row">UIN: {{ driver.uin }}</div>
+    <div class="container_row">Address: {{ driver.address }}</div>
+    <div class="container_row">Phone number: {{ driver.phone_number }}</div>
+    <div class="container_row">Driver's license ID: {{ driver.driving_license }}</div>
+</div>
+<a href="{% url 'routes' %}" class="blue-button">View pending routes</a>
+<h1>Active Routes</h1>
+    <div class="routes_top">
+        <div class="">Driver</div>
+        <div class="">Vehicle</div>
+        <div class="">Destination</div>
+        <div class="">Update button</div>
+    </div>
+    <div class="routes">
     {% for route in routes%}
-    <li>
-      <div>Driver: {{route.driver}} | Vehicle: {{route.vehicle}} | Destination: {{route.destination}}</div>
-      <a href="{% url 'update-route' pk=route.id %}">Update route status</a>
-    </li>
+        <div class="">{{route.driver}}</div>
+        <div class="">{{route.vehicle}}</div>
+        <div class="">{{route.destination}}</div>
+        <div class=""><a href="{% url 'update-route' pk=route.id %}" class="blue-button">Update</a></div>
+
     {% endfor %}
-    <h1>Route history</h1>
+    </div>
+<h1>Route history</h1>
+    <div class="routes_top">
+        <div class="">From</div>
+        <div class="">To</div>
+        <div class="">Distance</div>
+        <div class="">Time</div>
+    </div>
+<div class="routes">
     {% for route in history%}
-    <li>
-      <div>{{route.vehicle}} | From: {{route.origin}} To: {{route.destination}} | Distance: {{route.distance}}</div>
-      <div>
-        {{route.start_time}} - {{route.finish_time}}
-      </div>
-    </li>
+        <div class="">{{route.driver}}</div>
+        <div class="">{{route.vehicle}}</div>
+        <div class="">{{route.distance}}</div>
+        <div class="">{{route.start_time}} - {{route.finish_time}}></div>
     {% endfor %}
+</div>
 </html>

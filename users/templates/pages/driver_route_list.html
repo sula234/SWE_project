@@ -1,18 +1,27 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/route_list.css' %}" type="text/css" />
     <title>Route list</title>
   </head>
   <body>
     <h1>Route list</h1>
-    {% for route in routes%}
-    <li>
-      <div>Driver: {{route.driver}} | Vehicle: {{route.vehicle}} | Destination: {{route.destination}}</div>
-      <a href="{% url 'start-route' pk=route.id %}">Start route</a>
-    </li>
-    {% endfor %}
+    <ol>
+      {%for route in routes%}
+      <li>
+        <ul>
+          <li>Driver: {{route.driver}}</li>
+          <li>Vehicle: {{route.vehicle}}</li>
+          <li>Destination: {{route.destination}}</li>
+          <a href="{% url 'update-route' pk=route.id %}" class="blue-button">Start Route</a>
+        </ul>
+      </li>
+      {%endfor%}
+    </ol>
+    <a href="{% url 'driver-home' %}" class="blue-button">Back</a>
   </body>
 </html>

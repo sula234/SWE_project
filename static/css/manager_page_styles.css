@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 .container_main {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -60,12 +64,16 @@
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+.creat-button {
+    margin-bottom: 1rem;
+}
+
 .container_three-column select {
     display: block;
     min-width: 330px;
     width: 100%;
     padding: 0.375rem 0rem;
-    font-size: 1rem;
+    font-size: 1.35rem;
     line-height: 1.5;
     color: #495057;
     background-color: #fff;
@@ -73,4 +81,26 @@
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ECECEC;
+    padding: 0 5%;
+    margin: 0;
+}
+
+.header_nav {
+    display: flex;
+    gap: 15px;
+}
+
+.header_nav a {
+    color: black;
+    text-decoration: none;
+    font-size: 1.25rem;
 }
