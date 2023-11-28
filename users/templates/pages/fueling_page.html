@@ -1,16 +1,23 @@
 <!-- user_profile.html -->
-<!DOCTYPE html>
-<html>
+{%load static%}
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Fueling Person Profile</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/personalPage_template.css' %}" type="text/css" />
+    <title>Document</title>
 </head>
 <body>
-    <h1>User Profile</h1>
-    <p>Username: {{ fuelPerson.user.username }}</p>
-    <p>Email: {{ fuelPerson.user.email }}</p>
-    <p>First name: {{ fuelPerson.first_name }}</p>
-    <p>Last name: {{ fuelPerson.last_name }}</p>
-    <p>Gas Station: {{ fuelPerson.g_station_name }}</p>
-    <p>Use app to complete the fueling task</p>
+    <h2>Personal Information</h2>
+    <div class="container">
+        <div class="container_row">Name: {{ fuelPerson.first_name }} {{ fuelPerson.last_name }}</div>
+        <div class="container_row">Username: {{ fuelPerson.user.username }</div>
+        <div class="container_row">Email: {{ fuelPerson.user.email }}</div>
+        <div class="container_row">Gas Station: {{ fuelPerson.g_station_name }}</div>
+    </div>
+<h2>Use app to complete the fueling task</h2>
+    <a href="{%url 'home'%}" class="blue-button back-button" style="width:20%; margin:0";>Back</a>
 </body>
-</html>

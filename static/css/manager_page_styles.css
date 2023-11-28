@@ -4,13 +4,14 @@ body {
 
 .container_main {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(6, 1fr);
     gap: 5%;
 
 }
 
 .container {
     box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+    grid-column: span 2;
 }
 
 .container h3{
@@ -23,7 +24,7 @@ body {
 }
 
 .container_three-column {
-    grid-column: 1 / span 3;
+    grid-column: span 3;
 }
 
 .container_links {
@@ -68,7 +69,7 @@ body {
     margin-bottom: 1rem;
 }
 
-.container_three-column select {
+.container_report select {
     display: block;
     min-width: 330px;
     width: 100%;

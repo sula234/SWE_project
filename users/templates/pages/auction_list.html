@@ -1,20 +1,20 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/auction_list.css' %}" type="text/css" />
     <title>Auction list</title>
   </head>
   <body>
     <h1>Auction list</h1>
     {% for auction, image in data %}
-    <li>
-      <a href="{% url 'auction' pk=auction.id %}">
-        {{auction}}
-        <img src="{{image.image.url}}" width="250"/>
-      </a>
-    </li>
+    <h2>Auction for: {{auction}}</h2>
+    <img src="{{image.image.url}}" width="250"/>
+    <a href="{% url 'auction' pk=auction.id %}" class="blue-button">Update Information</a>
+    <hr>
     {% endfor %}
   </body>
 </html>

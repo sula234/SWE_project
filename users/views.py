@@ -6,13 +6,11 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views.generic import CreateView, View
 
-<<<<<<< HEAD
 from django.views.generic import TemplateView
 
 from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm, UpdateRouteStatusForm
-=======
 from .forms import AddVehicleForm, AssignVehicleForm, CreateAuctionForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateAuctionForm, UpdateRouteForm, UpdateRouteStatusForm, UploadImageForm
->>>>>>> main
+
 from django.contrib.auth import login
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
@@ -20,7 +18,7 @@ from django.urls import reverse
 from .decorators import admin_or_driver, admin_required, fuel_person_required, driver_required, maintenance_person_required, non_admin_required
 
 from django.http import HttpResponse
-<<<<<<< HEAD
+
 from .models import Driver, Route, User, Vehicle, MaintenancePerson
 
 from django.http import HttpResponseRedirect
@@ -38,13 +36,13 @@ def maintenancePerson_data(request):
 
 ###########################
 
-=======
+
 from .models import Driver, Route, User, Vehicle, FuelPreson, FuelReport
 from .models import Auction, AuctionImage, Driver, Route, User, Vehicle, is_admin
 
 from django.http import HttpResponseRedirect
 from datetime import datetime
->>>>>>> main
+
 
 class LoginView(auth_views.LoginView):
     form_class = LoginForm

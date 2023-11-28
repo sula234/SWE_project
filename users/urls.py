@@ -30,4 +30,3 @@ urlpatterns = [
     path("index1", views.HomePageView.as_view(), name="home"),
     path("maintenance_person_data", views.maintenancePerson_data, name="maintenancePerson_data"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
->>>>>>> main
