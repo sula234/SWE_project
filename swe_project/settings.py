@@ -13,9 +13,54 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+import os
+import sys
+
+# ... The rest of our Django settings
+
+BASE_URL = "http://localhost:8000"
+
+DEV_SERVER = len(sys.argv) > 1 and sys.argv[1] == "runserver"
+
+USE_NGROK = os.environ.get("USE_NGROK", "False") == "True" and os.environ.get("RUN_MAIN", None) != "true"
+
+import sys
+from urllib.parse import urlparse
+
+from django.apps import AppConfig
+from django.conf import settings
+
+
+class CommonConfig(AppConfig):
+    name = "myproject.common"
+    verbose_name = "Common"
+
+    def ready(self):
+        if settings.DEV_SERVER and settings.USE_NGROK:
+            # pyngrok will only be installed, and should only ever be initialized, in a dev environment
+            from pyngrok import ngrok
+
+            # Get the dev server port (defaults to 8000 for Django, can be overridden with the
+            # last arg when calling `runserver`)
+            addrport = urlparse("http://{}".format(sys.argv[-1]))
+            port = addrport.port if addrport.netloc and addrport.port else "8000"
+
+            # Open a ngrok tunnel to the dev server
+            public_url = ngrok.connect(port).public_url
+            print("ngrok tunnel \"{}\" -> \"http://127.0.0.1:{}\"".format(public_url, port))
+
+            # Update any base URLs or webhooks to use the public ngrok URL
+            settings.BASE_URL = public_url
+            CommonConfig.init_webhooks(public_url)
+
+    @staticmethod
+    def init_webhooks(base_url):
+        # Update inbound traffic via APIs to use the public-facing ngrok URL
+        pass
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -27,7 +72,6 @@ SECRET_KEY = 'django-insecure-hcd%d^99%b*%%bi5d@%42&wa#avz+o%9(y622d8r5kw+nbp=49
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -63,7 +107,7 @@ import os
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +121,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'swe_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -111,7 +154,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -122,7 +164,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

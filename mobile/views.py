@@ -4,16 +4,19 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 
 from django.shortcuts import get_object_or_404
 from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
 
 from mobile.models import Dispatcher
-from mobile.serializers import DriverSerializer, UserSerializer, RouteSerializer
-from users.models import User, Driver, Route
+from mobile.serializers import DriverSerializer, UserSerializer, RouteSerializer, FuelingSerializer, \
+    FuelingReportSerializer
+from users.models import User, Driver, Route, FuelPreson, FuelReport
 from users.views import Routes
 from django.views.decorators.csrf import csrf_exempt
 
@@ -119,6 +122,55 @@ def driver_info(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
+def fueling_info(request):
+    # Access the user from the request
+    user = request.user
+    fueling = FuelPreson.objects.get(user=user)
+    serializer = FuelingSerializer(fueling)
+    return Response(serializer.data)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def fueling_reports(request):
+    # Access the user from the request
+    user = request.user
+    fuel_reports = FuelReport.objects.filter(user=user)
+    serializer = FuelingReportSerializer(fuel_reports, many=True)
+    return Response(serializer.data)
+
+
+@csrf_exempt
+@api_view(['PUT', 'PATCH'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def update_fueling_report(request, fueling_report_id):
+    try:
+        user = request.user
+        fueling = FuelReport.objects.get(id=fueling_report_id, user=user)
+    except FuelReport.DoesNotExist:
+        return Response({'detail': 'Route not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'PUT':
+        # For a full update
+        serializer = FuelingReportSerializer(fueling, data=request.data)
+    else:
+        # For a partial update "PATCH"
+        serializer = FuelingReportSerializer(fueling, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@csrf_exempt
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_dispatcher_number(request):
     settings = Dispatcher.objects.first()  # THERE SHOULD BE ONLY 1 INSTANCE OF DISPATCHER
     return Response({'dispatcher_phone_number': settings.dispatcher_phone_number})
+
