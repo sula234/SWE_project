@@ -354,15 +354,46 @@ def deleteImage(request, pk):
 
 @login_required
 @admin_required
+def update_fueling_task(request, pk):
+    fueling_task = FuelReport.objects.get(pk=pk)
+    initial = {'vehicle': fueling_task.vehicle, 'driver': fueling_task.driver, 'fuel_preson': fueling_task.fuel_preson}
+    if request.method == 'POST':
+        form = CreateFuelingTaskForm(request.POST)
+        if form.is_valid():
+            fueling_task.vehicle = form.cleaned_data['vehicle']
+            fueling_task.driver = form.cleaned_data['driver']
+            fueling_task.fuel_preson = form.cleaned_data['fuel_preson']
+            fueling_task.save()
+            return redirect('fueling-tasks-list')
+    else:
+        form = CreateFuelingTaskForm(initial=initial)
+    return render(request, 'forms/update_fueling_task.html', {'form': form, 'pk': pk})
+
+
+@login_required
+@admin_required
 def create_fueling_task(request):
     if request.method == 'POST':
         form = CreateFuelingTaskForm(request.POST)
         if form.is_valid():
-            auction = form.save(commit=False)
-            auction.save()
-            return redirect('admin-home')
+            fueling_task = form.save(commit=False)
+            fueling_task.save()
+            return redirect('fueling-tasks-list')
     else:
         form = CreateFuelingTaskForm()
     return render(request, 'forms/create_fueling_task.html', {'form': form})
 
 
+@login_required
+@admin_required
+def list_fueling_reports(request):
+    fueling_tasks = list(FuelReport.objects.exclude(date__isnull=True))
+    print('yo')
+    return render(request, 'pages/fueling_reports_list.html', {'fueling_reports': fueling_tasks})
+
+
+@login_required
+@admin_required
+def list_fueling_tasks(request):
+    fueling_tasks = list(FuelReport.objects.filter(date__isnull=True))
+    return render(request, 'pages/fueling_tasks_list.html', {'fueling_tasks': fueling_tasks})

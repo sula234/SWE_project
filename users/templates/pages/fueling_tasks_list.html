@@ -1,0 +1,28 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/route_list.css' %}" type="text/css" />
+    <title>Fueling Task list</title>
+  </head>
+  <body>
+    <h1>Fueling Task list</h1>
+    <a href="{% url 'create-fueling-task' %}" class="blue-button">Add new task</a>
+    <ol>
+    {%for fueling_task in fueling_tasks%}
+      <li>
+        <ul>
+          <li>Fueling person: {{fueling_task.fuel_preson}}</li>
+          <li>Vehicle: {{fueling_task.vehicle}}</li>
+          <li>Driver: {{fueling_task.driver}}</li>
+          <a href="{% url 'update-fueling-task' pk=fueling_task.id %}" class="blue-button">Edit</a>
+        </ul>
+      </li>
+      {%endfor%}
+    </ol>
+    <a href="{%url 'fueling-reports-list'%}" class="blue-button">Back</a>
+  </body>
+</html>

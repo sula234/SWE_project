@@ -1,0 +1,39 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/route_list.css' %}" type="text/css" />
+    <title>Fueling Report list</title>
+  </head>
+  <body>
+    <a href="{% url 'fueling-tasks-list' %}" class="blue-button">View pending tasks</a>
+    <h1>Fueling Report list</h1>
+    <ol>
+    {%for fueling_report in fueling_reports%}
+      <li>
+        <ul>
+          <li>Fueling person: {{fueling_report.fueling_preson}}</li>
+          <li>Vehicle: {{fueling_report.vehicle}}</li>
+          <li>Driver: {{fueling_report.driver}}</li>
+          <li>Gas price: {{fueling_report.cost}}</li>
+          <li>Fuel amount: {{fueling_report.fuelAmount}}</li>
+          <li>Total cost: {{fueling_report.totalCost}}</li>
+          <li>Date: {{fueling_report.date}}</li>
+          <li>Driver Photo:</li>
+          <img src="{{fueling_report.driverPhoto.url}}" width="250px"/>
+          <li>Car Photo:</li>
+          <img src="{{fueling_report.carPhoto.url}}" width="250px"/>
+          <li>Fuel level photo before fueling:</li>
+          <img src="{{fueling_report.fuelLevelPhotoBefore.url}}" width="250px"/>
+          <li>Fuel level photo after fueling:</li>
+          <img src="{{fueling_report.fuelLevelPhotoAfter.url}}" width="250px"/>
+        </ul>
+      </li>
+      {%endfor%}
+    </ol>
+    <a href="{%url 'admin-home'%}" class="blue-button">Back</a>
+  </body>
+</html>
