@@ -78,7 +78,7 @@ class DriverSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
+        #login(self.request, user)
         return redirect('admin-home')
 
 
@@ -95,7 +95,7 @@ class FuelPersonSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
+        #login(self.request, user)
         return redirect('admin-home')
 
 
@@ -112,7 +112,7 @@ class MaintenancePersonSignUpView(CreateView):
 
     def form_valid(self, form):
         user = form.save()
-        login(self.request, user)
+        #login(self.request, user)
         return redirect('admin-home')
 
 

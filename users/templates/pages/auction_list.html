@@ -9,6 +9,7 @@
     <title>Auction list</title>
   </head>
   <body>
+  <a href="{%url 'home'%}" class="blue-button" style="width: 10%;">Back</a>
     <h1>Auction list</h1>
     {% for auction, image in data %}
     <h2>Auction for: {{auction}}</h2>

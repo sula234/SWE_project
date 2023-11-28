@@ -28,8 +28,6 @@ def maintenancePerson_data(request):
 #     MaintenancePerson_data = list(MaintenancePerson.objects.all())
     MaintenancePerson_data = MaintenancePerson.objects.get(user=request.user)
     Tasks = Task.objects.filter(user=request.user)
-    print("!!!!111")
-    print(Tasks)
     return render(request, 'maintainance_person/task_list.html',
     {'MaintenancePerson_data': MaintenancePerson_data, 'tasks':Tasks})
 

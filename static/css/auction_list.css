@@ -11,3 +11,10 @@
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     text-decoration: none;
 }
+
+
+.back-button {
+    text-decoration: none;
+    width: 50%;
+    margin: 1rem auto;
+}
