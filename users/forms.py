@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.db import transaction
 from django.forms.forms import Form
 from django.forms.models import ModelForm
-from .models import Auction, AuctionImage, Route, User, FuelPreson, Driver, MaintenancePerson, Vehicle
+from .models import Auction, AuctionImage, FuelReport, Route, User, FuelPreson, Driver, MaintenancePerson, Vehicle
 from django import forms
 from django.contrib.auth import get_user_model
 
@@ -145,3 +145,8 @@ class UploadImageForm(ModelForm):
     class Meta:
         model = AuctionImage
         fields = ["image"]
+
+class CreateFuelingTaskForm(ModelForm):
+    class Meta:
+        model = FuelReport
+        fields =('fuel_preson', 'driver', 'vehicle')

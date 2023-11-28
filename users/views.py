@@ -8,7 +8,7 @@ from django.views.generic import CreateView, View
 
 from django.views.generic import TemplateView
 
-from .forms import AddVehicleForm, AssignVehicleForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm, UpdateRouteStatusForm
+from .forms import AddVehicleForm, AssignVehicleForm, CreateFuelingTaskForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateRouteForm, UpdateRouteStatusForm
 from .forms import AddVehicleForm, AssignVehicleForm, CreateAuctionForm, CreateRouteForm, FuelPersonSignUpForm, DriverSignUpForm, MaintenancePersonSignUpForm ,LoginForm, UpdateAuctionForm, UpdateRouteForm, UpdateRouteStatusForm, UploadImageForm
 
 from django.contrib.auth import login
@@ -350,3 +350,19 @@ def deleteImage(request, pk):
     image = AuctionImage.objects.get(pk=pk)
     image.delete()
     return OK
+
+
+@login_required
+@admin_required
+def create_fueling_task(request):
+    if request.method == 'POST':
+        form = CreateFuelingTaskForm(request.POST)
+        if form.is_valid():
+            auction = form.save(commit=False)
+            auction.save()
+            return redirect('admin-home')
+    else:
+        form = CreateFuelingTaskForm()
+    return render(request, 'forms/create_fueling_task.html', {'form': form})
+
+

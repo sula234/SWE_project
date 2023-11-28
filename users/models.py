@@ -59,7 +59,7 @@ class Vehicle(models.Model):
 
 
 class FuelReport(models.Model):
-    user = models.ForeignKey(User, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    fuel_preson = models.ForeignKey(FuelPreson, default=None, null=True, blank=True, on_delete=models.SET_NULL)
     driver = models.ForeignKey(Driver, default=None, null=True, blank=True, on_delete=models.SET_NULL)
     vehicle = models.ForeignKey(Vehicle, default=None, null=True, blank=True, on_delete=models.SET_NULL)
     cost = models.FloatField(default=0.0)

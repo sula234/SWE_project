@@ -29,4 +29,5 @@ urlpatterns = [
     path("delete_image/<int:pk>", views.deleteImage, name="delete-image"),
     path("index1", views.HomePageView.as_view(), name="home"),
     path("maintenance_person_data", views.maintenancePerson_data, name="maintenancePerson_data"),
+    path("fuel_task/", views.create_fueling_task, name="create-fueling-task"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
