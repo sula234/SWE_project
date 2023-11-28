@@ -348,8 +348,9 @@ def uploadImage(request, pk):
 @admin_required
 def deleteImage(request, pk):
     image = AuctionImage.objects.get(pk=pk)
+    auction = image.auction
     image.delete()
-    return OK
+    return redirect('update-auction', pk=auction.id)
 
 
 @login_required

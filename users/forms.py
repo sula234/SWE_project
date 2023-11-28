@@ -142,9 +142,12 @@ class UpdateAuctionForm(Form):
     physical_condition = forms.TextInput()
 
 class UploadImageForm(ModelForm):
+    image = forms.ImageField(required=True)
     class Meta:
         model = AuctionImage
         fields = ["image"]
+
+# FUELING REPORTS
 
 class CreateFuelingTaskForm(ModelForm):
     class Meta:
