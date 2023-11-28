@@ -1,11 +1,14 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Report</title>
+  <link rel="stylesheet" href="{% static 'css/form_template.css' %}" type="text/css" />
+  <title>Driver Report</title>
 </head>
 <body>
+  <div class="container">
   <h1>{{auction.vehicle}}</h1>
   <h3>Description</h3>
   <div>
@@ -19,5 +22,7 @@
   {% for image in images %}
   <img src="{{image.image.url}}" width="250"/>
   {% endfor %}
+  <a href="{%url 'auctions'%}" class="blue-button">Back</a>
+  </div>
 </body>
 </html>
