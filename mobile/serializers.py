@@ -28,6 +28,19 @@ class FuelingSerializer(serializers.ModelSerializer):
 
 
 class FuelingReportSerializer(serializers.ModelSerializer):
+    # driver_name = serializers.SerializerMethodField()
+    # vehicle_plate_number = serializers.SerializerMethodField()
+
     class Meta:
         model = FuelReport
         fields = '__all__'
+
+    # def get_driver_name(self, obj):
+    #     # Compute the value for additional_field1
+    #     # For example, return a combination of other fields or a computed value
+    #     return self.fuel_reports
+    #
+    # def get_vehicle_plate_number(self, obj):
+    #     # Compute the value for additional_field2
+    #     # This could be any logic that makes sense for your application
+    #     return "Computed Value 2"

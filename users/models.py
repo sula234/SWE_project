@@ -62,6 +62,7 @@ class FuelReport(models.Model):
     fuel_preson = models.ForeignKey(FuelPreson, default=None, null=True, blank=True, on_delete=models.SET_NULL)
     driver = models.ForeignKey(Driver, default=None, null=True, blank=True, on_delete=models.SET_NULL)
     vehicle = models.ForeignKey(Vehicle, default=None, null=True, blank=True, on_delete=models.SET_NULL)
+    # driverName = models.CharField(max_length=100, default="None")
     cost = models.FloatField(default=0.0)
     fuelAmount = models.FloatField(default=0.0)
     totalCost = models.FloatField(default=0.0)

@@ -137,8 +137,12 @@ def fueling_info(request):
 def fueling_reports(request):
     # Access the user from the request
     user = request.user
-    fuel_reports = FuelReport.objects.filter(user=user)
-    serializer = FuelingReportSerializer(fuel_reports, many=True)
+    fuelPERDUN = FuelPreson.objects.get(user=user)
+    fuel_reports = FuelReport.objects.filter(fuel_preson=fuelPERDUN)
+    serializer = FuelingReportSerializer(
+        # driver_name = fuel_reports.driver.first_name,
+        # vehicle_plate_number = fuel_reports.vehicle.license_plate,
+        fuel_reports, many=True)
     return Response(serializer.data)
 
 
@@ -149,7 +153,8 @@ def fueling_reports(request):
 def update_fueling_report(request, fueling_report_id):
     try:
         user = request.user
-        fueling = FuelReport.objects.get(id=fueling_report_id, user=user)
+        fuelPERDUN = FuelPreson.objects.get(user=user)
+        fueling = FuelReport.objects.get(id=fueling_report_id, fuel_preson=fuelPERDUN)
     except FuelReport.DoesNotExist:
         return Response({'detail': 'Route not found.'}, status=status.HTTP_404_NOT_FOUND)
 
