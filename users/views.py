@@ -171,39 +171,41 @@ class Routes(View):
 
 
 #   ADMIN ROUTE UPDATE PAGE
-@login_required
-@admin_required
-def update_route(request, pk):
-    route = Route.objects.get(pk=pk)
-    initial = {'driver': route.driver, 'vehicle': route.vehicle, 'destination': route.destination}
-    if request.method == 'POST':
-        form = UpdateRouteForm(request.POST)
-        if form.is_valid():
-            route.driver = form.cleaned_data['driver']
-            route.vehicle = form.cleaned_data['vehicle']
-            route.destination = form.cleaned_data['destination']
-            route.save()
-            return redirect('routes')
-    else:
-        form = UpdateRouteForm(initial=initial)
-    return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
+#@login_required
+#@admin_required
+#def update_route(request, pk):
 
 
 #   DRIVER ROUTE UPDATE PAGE
 @login_required
-@driver_required
+@admin_or_driver
 def update_route(request, pk):
-    route = Route.objects.get(pk=pk)
-    initial = {'status': route.status}
-    if request.method == 'POST':
-        form = UpdateRouteStatusForm(request.POST)
-        if form.is_valid():
-            route.status = form.cleaned_data['status']
-            route.save()
-            return redirect('driver-home')
+    if request.user.is_staff:
+        route = Route.objects.get(pk=pk)
+        initial = {'driver': route.driver, 'vehicle': route.vehicle, 'destination': route.destination}
+        if request.method == 'POST':
+            form = UpdateRouteForm(request.POST)
+            if form.is_valid():
+                route.driver = form.cleaned_data['driver']
+                route.vehicle = form.cleaned_data['vehicle']
+                route.destination = form.cleaned_data['destination']
+                route.save()
+                return redirect('routes')
+        else:
+            form = UpdateRouteForm(initial=initial)
+        return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
     else:
-        form = UpdateRouteStatusForm(initial=initial)
-    return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
+        route = Route.objects.get(pk=pk)
+        initial = {'status': route.status}
+        if request.method == 'POST':
+            form = UpdateRouteStatusForm(request.POST)
+            if form.is_valid():
+                route.status = form.cleaned_data['status']
+                route.save()
+                return redirect('driver-home')
+        else:
+            form = UpdateRouteStatusForm(initial=initial)
+        return render(request, 'forms/update_route.html', {'form': form, 'pk': pk})
 
 
 @login_required
