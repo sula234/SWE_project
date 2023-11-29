@@ -19,6 +19,7 @@
           <li>Destination: {{route.destination}}</li>
           <li>Status: {{route.status}}</li>
           <a href="{% url 'update-route' pk=route.id %}" class="blue-button">Update</a>
+          <a href="{% url 'delete-route' pk=route.id %}" class="blue-button">Delete</a>
         </ul>
       </li>
       {%endfor%}

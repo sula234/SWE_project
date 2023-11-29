@@ -209,6 +209,14 @@ def update_route(request, pk):
 
 
 @login_required
+@admin_required
+def delete_route(request, pk):
+    route = Route.objects.get(pk=pk)
+    route.delete()
+    return redirect('routes')
+
+
+@login_required
 @driver_required
 def start_route(request, pk):
     route = Route.objects.get(pk=pk)

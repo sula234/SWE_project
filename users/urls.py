@@ -19,6 +19,7 @@ urlpatterns = [
     path("create/route", views.create_route, name="create-route"),
     path("routes/", views.Routes.as_view(), name="routes"),
     path("routes/<int:pk>", views.update_route, name="update-route"),
+    path("delete-route/<int:pk>", views.delete_route, name="delete-route"),
     path("report/<int:driver_id>/", views.create_report, name="create_report"),
     path("route-start/<int:pk>", views.start_route, name="start-route"),
     path("create-auction/", views.create_auction, name="create-auction"),
